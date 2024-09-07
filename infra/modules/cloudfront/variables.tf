@@ -1,0 +1,39 @@
+variable "origin_domain_name" {
+  type        = string
+  description = "Origin domain name"
+}
+
+variable "aliases" {
+  type        = list(string)
+  description = "CloudFront aliases"
+}
+
+variable "acm_certificate_arn" {
+  type        = string
+  description = "ACM Certificate ARN"
+}
+
+variable "default_root_object" {
+  type        = string
+  description = "Default root object"
+}
+
+variable "cache_policy_name" {
+  type        = string
+  description = "Cache policy name"
+}
+
+variable "cache_policy_comment" {
+  type        = string
+  description = "Cache policy comment"
+}
+
+variable "lambda_edge_arn" {
+  type        = string
+  description = "Lambda@Edge ARN"
+}
+
+variable "lambda_edge_version" {
+  type        = string
+  description = "Lambda@Edge version"
+}

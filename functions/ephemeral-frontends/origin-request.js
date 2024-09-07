@@ -1,8 +1,7 @@
 "use strict";
 
 exports.handler = async (event, context) => {
-  const s3DomainName =
-    "post-graduate-xpe-ephemeral-frontends-bucket.s3.amazonaws.com";
+  const s3DomainName = "ephemeral-frontends-bucket.s3.amazonaws.com";
 
   console.log(JSON.stringify({ event }, null, 2));
   const { request } = event.Records[0].cf;

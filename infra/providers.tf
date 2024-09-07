@@ -11,6 +11,7 @@ terraform {
     profile = "personal"
     region  = "us-east-1"
     key     = "tfstate"
+    encrypt = true
   }
 }
 
