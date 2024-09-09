@@ -15,3 +15,18 @@ variable "hosted_zone_id" {
   description = "Hosted zone ID"
   default     = "Z09500171G8Q18EXQSX4Z"
 }
+
+variable "bucket_objects_expiration_days" {
+  type        = number
+  description = "Number of days to keep previous versions of objects"
+  default     = 7
+}
+
+variable "default_project_tags" {
+  type        = map(string)
+  description = "Default tags for resources"
+  default = {
+    "Iac"     = "Terraform"
+    "Project" = "Ephemeral Frontends"
+  }
+}

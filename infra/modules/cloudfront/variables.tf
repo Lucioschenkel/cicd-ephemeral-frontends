@@ -37,3 +37,8 @@ variable "lambda_edge_version" {
   type        = string
   description = "Lambda@Edge version"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "Optional tags"
+}

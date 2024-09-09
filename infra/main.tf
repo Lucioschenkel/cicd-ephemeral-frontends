@@ -1,7 +1,10 @@
 module "s3" {
   source = "./modules/s3_bucket"
 
-  bucket_name = "${var.project_name}-bucket"
+  bucket_name            = "${var.project_name}-bucket"
+  object_expiration_days = var.bucket_objects_expiration_days
+
+  tags = var.default_project_tags
 }
 
 module "lambda_edge" {
@@ -12,6 +15,8 @@ module "lambda_edge" {
   lambda_function_name = "${var.project_name}-lambda"
   lambda_handler       = "index.handler"
   lambda_runtime       = "nodejs18.x"
+
+  tags = var.default_project_tags
 }
 
 module "cloudfront" {
@@ -27,6 +32,8 @@ module "cloudfront" {
   default_root_object  = "index.html"
 
   depends_on = [module.lambda_edge.lambda]
+
+  tags = var.default_project_tags
 }
 
 module "acm" {

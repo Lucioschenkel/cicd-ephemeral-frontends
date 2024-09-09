@@ -69,5 +69,7 @@ resource "aws_lambda_function" "lambda" {
     log_group  = aws_cloudwatch_log_group.lamba_log_group.name
   }
 
+  tags = var.tags
+
   depends_on = [aws_iam_role.iam_for_lambda]
 }

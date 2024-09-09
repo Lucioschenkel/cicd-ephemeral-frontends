@@ -79,4 +79,6 @@ resource "aws_cloudfront_distribution" "cloudfront_distro" {
   }
 
   default_root_object = var.default_root_object
+
+  tags = var.tags
 }

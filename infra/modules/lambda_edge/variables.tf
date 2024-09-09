@@ -22,3 +22,8 @@ variable "lambda_runtime" {
   type        = string
   description = "Runtime for Lambda function"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "Optional tags"
+}
