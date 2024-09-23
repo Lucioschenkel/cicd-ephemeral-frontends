@@ -46,6 +46,9 @@ jobs:
             -var="project_domain=${{ secrets.TF_PROJECT_DOMAIN }}" \
             -var="hosted_zone_id=${{ secrets.TF_HOSTED_ZONE_ID }}"
 
+      - name: Echo ref
+        run:
+          echo '${{ github }}'
 
   apply:
     needs: validate
