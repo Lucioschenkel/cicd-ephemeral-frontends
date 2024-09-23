@@ -8,7 +8,6 @@ terraform {
 
   backend "s3" {
     bucket  = "post-graduate-xpe-remote-state-bucket"
-    profile = "personal"
     region  = "us-east-1"
     key     = "tfstate"
     encrypt = true
@@ -16,6 +15,5 @@ terraform {
 }
 
 provider "aws" {
-  profile = "personal"
   region  = "us-east-1"
 }

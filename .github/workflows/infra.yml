@@ -1,0 +1,60 @@
+name: Deploy infra
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infra/**'
+  pull_request:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  validate:
+    name: Validate & Plan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+
+      - name: Terraform Validate
+        working-directory: infra
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: infra
+        run: |
+          terraform plan \
+            -var="project_name=${{ secrets.TF_PROJECT_NAME }}" \
+            -var="project_domain=${{ secrets.TF_PROJECT_DOMAIN }}" \
+            -var="hosted_zone_id=${{ secrets.TF_HOSTED_ZONE_ID }}"
+
+
+  apply:
+    needs: validate
+    name: Apply Infrastructure changes
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/head/main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply changes
+        working-directory: infra
+        run: |
+          terraform apply -auto-approve \
+            -var="project_name=${{ secrets.TF_PROJECT_NAME }}" \
+            -var="project_domain=${{ secrets.TF_PROJECT_DOMAIN }}" \
+            -var="hosted_zone_id=${{ secrets.TF_HOSTED_ZONE_ID }}"
