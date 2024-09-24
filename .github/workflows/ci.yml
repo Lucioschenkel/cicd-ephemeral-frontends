@@ -41,7 +41,7 @@ jobs:
       - name: Get deployment name
         id: get-deployment-name
         run: |
-          deployment_name=$(git rev-parse --abbrev-ref HEAD | tr '\/' '-' )
+          deployment_name=$(echo "${{ github.event.pull_request.head.ref }}" | tr '\/' '-' )
           echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
 
       - name: Deploy
