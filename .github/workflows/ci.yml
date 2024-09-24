@@ -5,6 +5,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 jobs:
   ci:
@@ -40,7 +41,7 @@ jobs:
       - name: Get deployment name
         id: get-deployment-name
         run: |
-          deployment_name=$(echo "${{ github.ref_name }}" | tr '\/' '-' )
+          deployment_name=$(echo "${{ github.event.pull_request.head.ref }}" | tr '\/' '-' )
           echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
 
       - name: Deploy
