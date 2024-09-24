@@ -46,17 +46,11 @@ jobs:
             -var="project_domain=${{ secrets.TF_PROJECT_DOMAIN }}" \
             -var="hosted_zone_id=${{ secrets.TF_HOSTED_ZONE_ID }}"
 
-      - name: Echo ref
-        run: |
-          echo ${{ github.ref }}
-          echo ${{ github.ref_name }}
-          echo ${{ github.event_name }}
-
   apply:
     needs: validate
     name: Apply Infrastructure changes
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/head/main' }}
+    if: ${{ github.ref_name == 'main' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
