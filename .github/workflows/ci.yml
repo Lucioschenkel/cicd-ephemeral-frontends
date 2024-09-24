@@ -45,7 +45,7 @@ jobs:
 
       - name: Deploy
         run: |
-          aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }}/${{ steps.get-deployment-name.outputs.deployment_name }}
+          aws s3 sync ./apps/frontend/dist s3://${{ secrets.S3_BUCKET_NAME }}/${{ steps.get-deployment-name.outputs.deployment_name }}
 
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
