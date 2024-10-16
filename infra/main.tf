@@ -7,6 +7,13 @@ module "s3" {
   tags = var.default_project_tags
 }
 
+resource "local_file" "lambda_config" {
+  content = "{\"baseUrl\":\"${module.s3.bucket_domain_name}\"}"
+  filename = "../functions/ephemeral-frontends/config.json"
+
+  depends_on = [ module.s3 ]
+}
+
 module "lambda_edge" {
   source = "./modules/lambda_edge"
 
@@ -17,6 +24,8 @@ module "lambda_edge" {
   lambda_runtime       = "nodejs18.x"
 
   tags = var.default_project_tags
+
+  depends_on = [ local_file.lambda_config ]
 }
 
 module "cloudfront" {
