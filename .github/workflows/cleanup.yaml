@@ -1,0 +1,31 @@
+name: Clean up ephemeral resources on AWS
+on:
+  pull_request:
+    types:
+      - closed
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+
+      - name: Get deployment name
+        id: get-deployment-name
+        run: |
+          deployment_name=$(echo "${{ github.event.pull_request.head.ref }}" | tr '\/' '-' )
+          echo "deployment_name=$deployment_name" >> $GITHUB_OUTPUT
+
+      - name: Delete ephemeral deployment
+        run: |
+          aws s3 rm --recursive s3://${{ secrets.S3_BUCKET_NAME }}/${{ steps.get-deployment-name.outputs.deployment_name }}/
+
