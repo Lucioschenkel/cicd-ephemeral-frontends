@@ -1,7 +1,9 @@
 "use strict";
 
+const config = require('./config.json');
+
 exports.handler = async (event, context) => {
-  const s3DomainName = "ephemeral-frontends-bucket.s3.amazonaws.com";
+  const s3DomainName = config.baseUrl;
 
   console.log(JSON.stringify({ event }, null, 2));
   const { request } = event.Records[0].cf;
