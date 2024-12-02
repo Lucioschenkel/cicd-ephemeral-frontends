@@ -1,12 +1,10 @@
 {
   "name": "cicd-ephemeral-frontends",
   "version": "1.0.0",
-  "description": "",
   "scripts": {},
   "keywords": [],
   "author": {
-    "name": "Lucio Schenkel",
-    "email": "contato@lucioschenkel.com"
+    "name": "Lucio Schenkel"
   },
   "license": "ISC",
   "workspaces": [
