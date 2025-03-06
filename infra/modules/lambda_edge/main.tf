@@ -41,17 +41,34 @@ resource "aws_iam_role" "iam_for_lambda" {
       },
     ]
   })
+}
 
-  inline_policy {
-    name   = "iam_policy_for_lambda"
-    policy = aws_iam_policy.iam_policy_for_lambda.policy
-  }
+resource "aws_iam_policy_attachment" "lambda_iam_policy" {
+  name       = "lambda-edge-policy-attachment"
+  policy_arn = aws_iam_policy.iam_policy_for_lambda.arn
+  roles      = [aws_iam_role.iam_for_lambda.name]
 }
 
 data "archive_file" "lambda" {
   type        = "zip"
-  source_dir  = var.lambda_source_dir
   output_path = "${path.module}/${var.lambda_function_name}.zip"
+
+  source {
+    content  = file("${path.module}/lambda_templates/index.js")
+    filename = "index.js"
+  }
+
+  source {
+    content  = file("${path.module}/lambda_templates/viewer-request.js")
+    filename = "viewer-request.js"
+  }
+
+  source {
+    content = templatefile("${path.module}/lambda_templates/origin-request.js.tpl", {
+      s3_domain_name = var.s3_domain_name
+    })
+    filename = "origin-request.js"
+  }
 }
 
 resource "aws_lambda_function" "lambda" {
@@ -62,7 +79,7 @@ resource "aws_lambda_function" "lambda" {
   filename         = "${path.module}/${var.lambda_function_name}.zip"
   publish          = true
 
-  runtime = var.lambda_runtime
+  runtime = local.lambda_runtime
 
   logging_config {
     log_format = "Text"

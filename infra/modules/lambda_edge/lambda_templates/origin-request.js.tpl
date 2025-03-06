@@ -1,9 +1,7 @@
 "use strict";
 
-const config = require('./config.json');
-
 exports.handler = async (event, context) => {
-  const s3DomainName = config.baseUrl;
+  const s3DomainName = "${s3_domain_name}"
 
   console.log(JSON.stringify({ event }, null, 2));
   const { request } = event.Records[0].cf;
@@ -12,7 +10,7 @@ exports.handler = async (event, context) => {
 
   const getPath = (domain) => {
     const [subdomain] = domain.split(".");
-    return `/${subdomain}`;
+    return '/'.concat(subdomain);
   };
 
   request.origin = {

@@ -6,16 +6,16 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket  = "post-graduate-xpe-remote-state-bucket"
-    region  = "us-east-1"
-    key     = "tfstate"
-    encrypt = true
-  }
+  # backend "s3" {
+  #   bucket  = "post-graduate-xpe-remote-state-bucket"
+  #   region  = "us-east-1"
+  #   key     = "tfstate"
+  #   encrypt = true
+  # }
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 provider "local" {}

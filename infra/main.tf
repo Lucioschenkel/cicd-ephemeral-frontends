@@ -7,25 +7,16 @@ module "s3" {
   tags = var.default_project_tags
 }
 
-resource "local_file" "lambda_config" {
-  content = "{\"baseUrl\":\"${module.s3.bucket_domain_name}\"}"
-  filename = "../functions/ephemeral-frontends/config.json"
-
-  depends_on = [ module.s3 ]
-}
-
 module "lambda_edge" {
   source = "./modules/lambda_edge"
 
   log_group_name       = "/aws/lambda/${var.project_name}-lambda"
-  lambda_source_dir    = "../functions/ephemeral-frontends"
   lambda_function_name = "${var.project_name}-lambda"
   lambda_handler       = "index.handler"
   lambda_runtime       = "nodejs18.x"
+  s3_domain_name       = module.s3.bucket_domain_name
 
   tags = var.default_project_tags
-
-  depends_on = [ local_file.lambda_config ]
 }
 
 module "cloudfront" {
