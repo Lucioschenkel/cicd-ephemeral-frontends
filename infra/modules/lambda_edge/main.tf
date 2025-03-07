@@ -90,3 +90,10 @@ resource "aws_lambda_function" "lambda" {
 
   depends_on = [aws_iam_role.iam_for_lambda]
 }
+
+resource "aws_lambda_permission" "cloudfront" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda.function_name
+  principal     = "cloudfront.amazonaws.com"
+  source_arn    = var.cloudfront_distribution_arn
+}

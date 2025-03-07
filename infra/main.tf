@@ -10,11 +10,11 @@ module "s3" {
 module "lambda_edge" {
   source = "./modules/lambda_edge"
 
-  log_group_name       = "/aws/lambda/${var.project_name}-lambda"
-  lambda_function_name = "${var.project_name}-lambda"
-  lambda_handler       = "index.handler"
-  lambda_runtime       = "nodejs18.x"
-  s3_domain_name       = module.s3.bucket_domain_name
+  log_group_name              = "/aws/lambda/${var.project_name}-lambda"
+  lambda_function_name        = "${var.project_name}-lambda"
+  lambda_handler              = "index.handler"
+  s3_domain_name              = module.s3.bucket_domain_name
+  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 
   tags = var.default_project_tags
 }
@@ -60,9 +60,3 @@ module "s3_bucket_policy" {
   cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
 }
 
-module "lambda_edge_permission" {
-  source = "./modules/lambda_edge_permission"
-
-  function_name               = module.lambda_edge.function_name
-  cloudfront_distribution_arn = module.cloudfront.cloudfront_distribution_arn
-}

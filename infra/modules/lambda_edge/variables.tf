@@ -13,16 +13,17 @@ variable "lambda_handler" {
   description = "Lambda handler"
 }
 
-variable "lambda_runtime" {
-  type        = string
-  description = "Runtime for Lambda function"
-}
-
 variable "tags" {
   type        = map(string)
-  description = "Optional tags"
+  description = "Resource tags"
 }
 
 variable "s3_domain_name" {
+  type        = string
+  description = "S3 Bucket domain name. Used in combination with the request subdomain to determine the root object path on S3"
+}
 
+variable "cloudfront_distribution_arn" {
+  type        = string
+  description = "CloudFront distribution ARN"
 }

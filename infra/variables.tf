@@ -5,12 +5,12 @@ variable "project_name" {
 
 variable "project_domain" {
   type        = string
-  description = "Project domain"
+  description = "Wildcard domain used for the project, e.g. *.example.com"
 }
 
 variable "hosted_zone_id" {
   type        = string
-  description = "Hosted zone ID"
+  description = "Route53 Hosted zone ID. This Terraform stack won't provision a hosted zone. One must already be present in your AWS account"
 }
 
 variable "bucket_objects_expiration_days" {
