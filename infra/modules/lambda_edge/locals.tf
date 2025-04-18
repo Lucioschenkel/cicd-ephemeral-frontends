@@ -1,3 +1,3 @@
 locals {
-  lambda_runtime = "nodejs18.x"
+  lambda_runtime = "nodejs20.x"
 }
