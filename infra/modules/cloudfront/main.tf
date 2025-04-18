@@ -43,7 +43,8 @@ resource "aws_cloudfront_distribution" "cloudfront_distro" {
     origin_id                = "s3-origin"
   }
 
-  enabled = true
+  enabled    = true
+  web_acl_id = var.web_acl_id  # This should be the full ARN of the WAF WebACL
 
   restrictions {
     geo_restriction {

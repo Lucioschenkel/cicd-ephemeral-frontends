@@ -42,3 +42,9 @@ variable "tags" {
   type        = map(string)
   description = "Optional tags"
 }
+
+variable "web_acl_id" {
+  type        = string
+  description = "The ARN of the AWS WAF web ACL to associate with the CloudFront distribution. Note that despite the variable name, CloudFront expects the full ARN."
+  default     = null
+}

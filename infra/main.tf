@@ -19,6 +19,19 @@ module "lambda_edge" {
   tags = var.default_project_tags
 }
 
+module "waf" {
+  source = "./modules/waf"
+
+  providers = {
+    aws.us-east-1 = aws.us-east-1
+  }
+
+  acl_name_prefix = var.project_name
+  rate_limit      = 3000 # Adjust based on your expected traffic patterns
+  
+  tags = var.default_project_tags
+}
+
 module "cloudfront" {
   source = "./modules/cloudfront"
 
@@ -30,8 +43,9 @@ module "cloudfront" {
   lambda_edge_arn      = module.lambda_edge.lambda.arn
   lambda_edge_version  = module.lambda_edge.lambda.version
   default_root_object  = "index.html"
+  web_acl_id           = module.waf.web_acl_arn
 
-  depends_on = [module.lambda_edge.lambda]
+  depends_on = [module.lambda_edge.lambda, module.waf]
 
   tags = var.default_project_tags
 }
