@@ -6,7 +6,7 @@ header-from: main.tf
 footer-from: ""
 
 recursive:
-  enabled: false
+  enabled: true
   path: infra
   include-main: true
 
@@ -17,7 +17,7 @@ sections:
 content: ""
 
 output:
-  file: ""
+  file: "README.md"
   mode: inject
   template: |-
     <!-- BEGIN_TF_DOCS -->
@@ -36,7 +36,7 @@ settings:
   anchor: true
   color: true
   default: true
-  description: false
+  description: true
   escape: true
   hide-empty: false
   html: true
