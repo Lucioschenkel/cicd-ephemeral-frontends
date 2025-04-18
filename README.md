@@ -12,4 +12,7 @@ Using a combination of AWS S3, CloudFront, Lambda@Edge (plus a few other service
 
 If you want to run this locally, simply grab yourself a copy of the repo, set up your `terraform.tfvars` with the required variables (as documented in `infra/README.md`) and run `terraform apply`.
 
+> [!IMPORTANT]
+> You will need to comment out or remove the remote backend configuration under `infra/providers.tf`.
+
 If you'd like to leverage the GitHub workflows for automated provisioning and deployments, you will first need to configure GitHub Actions to authenticate with AWS. You can do so by following this official tutorial: https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/.
