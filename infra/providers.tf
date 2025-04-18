@@ -6,12 +6,13 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket  = "post-graduate-xpe-remote-state-bucket"
-  #   region  = "us-east-1"
-  #   key     = "tfstate"
-  #   encrypt = true
-  # }
+  backend "s3" {
+    bucket  = "animals4life-tf-remote-state"
+    region  = "us-east-1"
+    key     = "tfstate"
+    encrypt = true
+    dynamodb_table = "animals4life-tf-state"
+  }
 }
 
 provider "aws" {
